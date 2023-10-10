@@ -9,4 +9,4 @@ How to use :
 
 3- open a Client-rec.py in all devies 
 
-4- open a sender in any device and type a name of process u want kill it in all devices 
+4- open a sender.py in any device and type a name of process u want kill it in all devices 
