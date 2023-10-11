@@ -1,5 +1,5 @@
 # K-Server
-Server allowed you to kill a process in all devices inside a network 
+The server allows you to have simple control over all devices within the network
 
 How to use : 
 
@@ -9,4 +9,4 @@ How to use :
 
 3- open a Client-rec.py in all devies 
 
-4- open a sender.py in any device and type a name of process u want kill it in all devices 
+4- open a sender.py in any device and select a options .
