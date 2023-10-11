@@ -12,7 +12,7 @@ How to use :
 4- open a sender.py in any device and select a options .
 
 
-Requirements : 
+# Requirements : 
 customtkinter -> pip install customtkinter
 
 tkinter -> pip install tkinter
