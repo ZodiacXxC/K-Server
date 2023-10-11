@@ -10,3 +10,8 @@ How to use :
 3- open a Client-rec.py in all devies 
 
 4- open a sender.py in any device and select a options .
+
+
+Requirements : 
+customtkinter -> pip install customtkinter
+tkinter -> pip install tkinter
