@@ -3,13 +3,58 @@ import tkinter as tk
 import socket
 import threading
 import time
+import tkinter.messagebox as tkmb 
 
 ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("green")
+ctk.set_default_color_theme("blue")
 
 appWidth, appHeight = 500, 500
 response = ""
 datax = None
+
+def login():
+    username = valueEntry.get()
+    password = propEntry.get()
+
+    global commandOptionMenu
+    global processOptionMenu
+    global startButton
+    global textbox
+    if username == "tareq" and password == "tareq112233":
+        tkmb.showinfo(title="Login Successful",message="You have logged in Successfully")
+        valueEntry.destroy()
+        valueLabel.destroy()
+        propEntry.destroy()
+        propLabel.destroy()
+        logButton.destroy()
+        commandLabel = ctk.CTkLabel(app, text="Command:")
+        commandLabel.grid(row=8, column=0, padx=20, pady=20, sticky="ew")
+
+
+        commandOptions = ["Kill", "Run", "Shutdown", "Restart"]
+
+        commandOptionMenu = ctk.CTkOptionMenu(app ,values=commandOptions,command=changeOptions)
+        commandOptionMenu.grid(row=8, column=1, padx=20, pady=20, columnspan=2, sticky="ew")
+
+
+        processLabel = ctk.CTkLabel(app, text="Process:")
+        processLabel.grid(row=9, column=0, padx=20, pady=20, sticky="ew")
+
+        processOptions = ["AlSahlHIS", "Chrome", "Notepad"]
+        processOptionMenu = ctk.CTkOptionMenu(app, values=processOptions)
+        processOptionMenu.grid(row=9, column=1, padx=20, pady=20, columnspan=2, sticky="ew")
+
+        startButton = ctk.CTkButton(app, text="Start a command", command=startCommand)
+        startButton.grid(row=10, column=1, columnspan=2, padx=20, pady=20, sticky="ew")
+        startButton.configure(state="disabled")
+
+        textbox = ctk.CTkTextbox(app,width=280, height=60)
+        textbox.grid(row=11, column=1, columnspan=2, padx=20, pady=20, sticky="ew")
+        # Create a thread to handle server connections
+        server_thread = threading.Thread(target=TryCon)
+        server_thread.start()
+    else:
+        tkmb.showinfo(title="Login failed",message="Incorrect username or password , Please try again !!")
 def startCommand():
     global response
     command_value = commandOptionMenu.get()
@@ -51,41 +96,48 @@ def changeOptions(select_options):
         processOptions = []
         processOptionMenu.configure(values=processOptions)
         processOptionMenu.set("")
+
+
     elif select_options == "Kill" or select_options == "Run" :
         processOptions = ["AlSahlHIS", "Chrome", "Notepad"]
         processOptionMenu.configure(values=processOptions)
         processOptionMenu.set("AlSahlHIS")
+
+def move_to_next(event):
+    event.widget.tk_focusNext().focus_set()
+
+def move_to_login(event):
+    login()
+
 
 app = ctk.CTk()
 app.title("K-Server")
 app.geometry(f"{appWidth}x{appHeight}")
 
 programLabel = ctk.CTkLabel(app,text="K-Server",font=("Times New Roman", 36))
-programLabel.grid(row=6, column=1, padx=100, pady=20, sticky="ew")
+programLabel.grid(row=0, column=1, padx=100, pady=20, sticky="ew")
+# Value form
+valueLabel = ctk.CTkLabel(app, text="Username:", font=("Arial", 12, "bold"))
+valueLabel.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
 
-commandLabel = ctk.CTkLabel(app, text="Command:")
-commandLabel.grid(row=8, column=0, padx=20, pady=20, sticky="ew")
+valueEntry = ctk.CTkEntry(app,placeholder_text="Username")
+valueEntry.grid(row=1, column=1, padx=20, pady=20, sticky="ew")
+valueEntry.bind("<Return>", move_to_next)
+
+# Proportion form
+propLabel = ctk.CTkLabel(app, text="Password:", font=("Arial", 12, "bold"))
+propLabel.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
+
+propEntry = ctk.CTkEntry(app,placeholder_text="Username",show="*")
+propEntry.grid(row=2, column=1, padx=20, pady=20, sticky="ew")
+propEntry.bind("<Return>", move_to_login)
+
+#login form 
+logButton = ctk.CTkButton(app, text="Login", command=login)
+logButton.grid(row=3, column=1, columnspan=2, padx=20, pady=20, sticky="ew")
 
 
-commandOptions = ["Kill", "Run", "Shutdown", "Restart"]
 
-commandOptionMenu = ctk.CTkOptionMenu(app ,values=commandOptions,command=changeOptions)
-commandOptionMenu.grid(row=8, column=1, padx=20, pady=20, columnspan=2, sticky="ew")
-
-
-processLabel = ctk.CTkLabel(app, text="Process:")
-processLabel.grid(row=9, column=0, padx=20, pady=20, sticky="ew")
-
-processOptions = ["AlSahlHIS", "Chrome", "Notepad"]
-processOptionMenu = ctk.CTkOptionMenu(app, values=processOptions)
-processOptionMenu.grid(row=9, column=1, padx=20, pady=20, columnspan=2, sticky="ew")
-
-startButton = ctk.CTkButton(app, text="Start a command", command=startCommand)
-startButton.grid(row=10, column=1, columnspan=2, padx=20, pady=20, sticky="ew")
-startButton.configure(state="disabled")
-
-textbox = ctk.CTkTextbox(app,width=280, height=60)
-textbox.grid(row=11, column=1, columnspan=2, padx=20, pady=20, sticky="ew")
 host = "192.160.0.138"
 port = 12345
 
@@ -131,8 +183,6 @@ def StartCon():
         else:
             break
 
-# Create a thread to handle server connections
-server_thread = threading.Thread(target=TryCon)
-server_thread.start()
+
 
 app.mainloop()
