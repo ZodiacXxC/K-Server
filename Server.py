@@ -6,7 +6,7 @@ total_connections = 0
 
 
 x = datetime.datetime.now()
-xdate = str(x.day) + "/" + str(x.month)  + "/" + str(x.year)
+xdate = x.strftime("%d/%m/%Y")
 currentTime = ''
 class Client(threading.Thread):
     x = datetime.datetime.now()
