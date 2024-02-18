@@ -15,7 +15,7 @@ def receive(socket, signal):
             TryCon()
 
 # Get host and port
-host = "192.160.0.138"
+host = "1.1.1.1" # set ur ip
 port = 12345
 
 def TryCon():
