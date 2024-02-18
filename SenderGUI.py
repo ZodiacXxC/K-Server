@@ -20,7 +20,7 @@ def login():
     global processOptionMenu
     global startButton
     global textbox
-    if username == "tareq" and password == "tareq112233":
+    if username == "test" and password == "test":
         tkmb.showinfo(title="Login Successful",message="You have logged in Successfully")
         valueEntry.destroy()
         valueLabel.destroy()
